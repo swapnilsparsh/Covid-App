@@ -12,22 +12,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CovidApp">
 
-        <activity android:name=".PrecautionActivity" />
-        <activity android:name=".SymptomsActivity" />
+        <activity android:name=".ui.activity.PrecautionActivity" />
+        <activity android:name=".ui.activity.SymptomsActivity" />
 
 
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity android:name=".SplashScreen">
+        <activity android:name=".ui.activity.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".ui.activity.MainActivity" />
     </application>
 
 </manifest>
