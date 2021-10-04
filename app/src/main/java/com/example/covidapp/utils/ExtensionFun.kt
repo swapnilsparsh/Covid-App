@@ -5,7 +5,7 @@ import android.content.Intent
 import android.net.Uri
 
 fun Activity.goNextScreen(nextActivity: Class<*>, isFinished: Boolean = false) {
-    startActivity(Intent(this, nextActivity::class.java))
+    startActivity(Intent(this, nextActivity))
     if (isFinished) {
         finish()
     }

@@ -21,7 +21,6 @@
             android:required="false" />
 
         <activity android:name=".ui.activity.SplashScreen"
-            android:exported="true"
             android:theme="@style/splashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,7 +29,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activity.MainActivity" />
+        <activity android:name=".ui.activity.MainActivity"/>
     </application>
 
 </manifest>

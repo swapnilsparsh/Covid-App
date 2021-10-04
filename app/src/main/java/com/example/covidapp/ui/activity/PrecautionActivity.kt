@@ -6,17 +6,24 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.covidapp.R
 import com.example.covidapp.data.model.Model
+import com.example.covidapp.databinding.ActivityPrecautionBinding
 import com.example.covidapp.ui.adapter.PrecautionsAdapter
-import kotlinx.android.synthetic.main.activity_precaution.recyclerView
 
 class PrecautionActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityPrecautionBinding
+    private val precautionsAdapter by lazy { PrecautionsAdapter() }
+    private val precautionsList = ArrayList<Model>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_precaution)
+        binding = ActivityPrecautionBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        val precautionsList = ArrayList<Model>()
+        binding.recyclerView.apply {
+            layoutManager =
+                LinearLayoutManager(this@PrecautionActivity, RecyclerView.VERTICAL, false)
+            adapter = precautionsAdapter
+        }
         precautionsList.add(
             Model(
                 R.drawable.vaccine,
@@ -53,8 +60,6 @@ class PrecautionActivity : AppCompatActivity() {
             )
         )
 
-        val precautionsAdapter = PrecautionsAdapter(precautionsList)
-
-        recyclerView.adapter = precautionsAdapter
+        precautionsAdapter.submitList(precautionsList)
     }
 }

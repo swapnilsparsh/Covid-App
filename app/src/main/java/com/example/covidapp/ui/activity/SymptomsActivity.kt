@@ -6,17 +6,24 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.covidapp.R
 import com.example.covidapp.data.model.Model
+import com.example.covidapp.databinding.ActivitySymptomsBinding
 import com.example.covidapp.ui.adapter.SymptomsAdapter
-import kotlinx.android.synthetic.main.activity_symptoms.recyclerView
 
 class SymptomsActivity : AppCompatActivity() {
+    private lateinit var binding: ActivitySymptomsBinding
+
+    private val symptomsList = ArrayList<Model>()
+    private val symptomsAdapter by lazy { SymptomsAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_symptoms)
+        binding = ActivitySymptomsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        val symptomsList = ArrayList<Model>()
+        binding.recyclerView.apply {
+            layoutManager = LinearLayoutManager(this@SymptomsActivity, RecyclerView.VERTICAL, false)
+            adapter = symptomsAdapter
+        }
         symptomsList.add(
             Model(
                 R.drawable.cough,
@@ -66,9 +73,6 @@ class SymptomsActivity : AppCompatActivity() {
                 "Shortness of breath, is an uncomfortable condition that makes it difficult to fully get air into your lungs."
             )
         )
-
-        val symptomsAdapter = SymptomsAdapter(symptomsList)
-
-        recyclerView.adapter = symptomsAdapter
+        symptomsAdapter.submitList(symptomsList)
     }
 }

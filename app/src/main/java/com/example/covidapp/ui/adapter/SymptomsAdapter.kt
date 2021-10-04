@@ -2,38 +2,47 @@ package com.example.covidapp.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.covidapp.data.model.Model
-import com.example.covidapp.R
+import com.example.covidapp.databinding.ItemSymptomsBinding
 
-class SymptomsAdapter(var list: ArrayList<Model>) : RecyclerView.Adapter<SymptomsAdapter.ViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+class SymptomsAdapter() :
+    ListAdapter<Model, SymptomsAdapter.ViewHolder>(COMPARATOR) {
+    companion object {
+        private val COMPARATOR = object : DiffUtil.ItemCallback<Model>() {
+            override fun areContentsTheSame(oldItem: Model, newItem: Model): Boolean {
+                return oldItem.equals(newItem)
+            }
 
-        val inflater = LayoutInflater.from(parent.context)
-        return ViewHolder(inflater, parent)
+            override fun areItemsTheSame(oldItem: Model, newItem: Model): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
 
-    override fun getItemCount(): Int {
-        return list.size
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(
+            ItemSymptomsBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val symptomsModel = list[position]
-        holder.bind(symptomsModel)
+        holder.bind(getItem(position))
     }
 
-    class ViewHolder(inflater: LayoutInflater, viewGroup: ViewGroup) :
-        RecyclerView.ViewHolder(inflater.inflate(R.layout.item_symptoms, viewGroup, false)) {
+    inner class ViewHolder(private val binding: ItemSymptomsBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(model: Model) {
-            val symptomsText = itemView.findViewById<TextView>(R.id.txtSymptoms)
-            val symptomsTextDetail = itemView.findViewById<TextView>(R.id.txtSymptomsDetail)
-            val imageView = itemView.findViewById<ImageView>(R.id.imageView)
+        fun bind(model: Model) = binding.run {
             imageView.setImageResource(model.imageview)
-            symptomsText.text = model.symptomsText
-            symptomsTextDetail.text = model.symptomsDetail
+            txtSymptoms.text = model.symptomsText
+            txtSymptomsDetail.text = model.symptomsDetail
         }
     }
 }

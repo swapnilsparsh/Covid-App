@@ -8,9 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.example.covidapp.data.model.Model
-import com.example.covidapp.ui.adapter.PrecautionsAdapter
 import com.example.covidapp.R
+import com.example.covidapp.data.model.Model
+import com.example.covidapp.databinding.ActivityMainBinding
+import com.example.covidapp.ui.adapter.PrecautionsAdapter
 import com.example.covidapp.ui.adapter.SymptomsAdapter
 import com.example.covidapp.utils.Constant.KNOW_MORE
 import com.example.covidapp.utils.Constant.SWAPNIL_GITHUB
@@ -18,17 +19,40 @@ import com.example.covidapp.utils.Constant.SWAPNIL_LINKEDIN
 import com.example.covidapp.utils.Constant.SWAPNIL_WEB
 import com.example.covidapp.utils.goNextScreen
 import com.example.covidapp.utils.loadWeb
-import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+    private val symptomsList = ArrayList<Model>()
+    private val precautionsList = ArrayList<Model>()
+
+    private val symptomsAdapter: SymptomsAdapter by lazy { SymptomsAdapter() }
+    private val precautionsAdapter: PrecautionsAdapter by lazy { PrecautionsAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-        val symptomsList = ArrayList<Model>()
+        binding.recyclerView.apply {
+            layoutManager = LinearLayoutManager(
+                this@MainActivity,
+                RecyclerView.HORIZONTAL,
+                false
+            )
+
+            adapter = symptomsAdapter
+        }
+
+        binding.recyclerViewPrecautions.apply {
+            layoutManager = LinearLayoutManager(
+                this@MainActivity,
+                RecyclerView.HORIZONTAL,
+                false
+            )
+            adapter = precautionsAdapter
+        }
+
         symptomsList.add(
             Model(
                 R.drawable.cough,
@@ -50,14 +74,6 @@ class MainActivity : AppCompatActivity() {
                 "A painful sensation in any part of the head, ranging from sharp to dull, that may occur with other symptoms."
             )
         )
-
-        val symptomsAdapter = SymptomsAdapter(symptomsList)
-
-        recyclerView.adapter = symptomsAdapter
-
-        recyclerViewPrecautions.layoutManager =
-            LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-        val precautionsList = ArrayList<Model>()
         precautionsList.add(
             Model(
                 R.drawable.vaccine,
@@ -80,10 +96,13 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
-        val precautionsAdapter = PrecautionsAdapter(precautionsList)
+        symptomsAdapter.submitList(symptomsList)
+        precautionsAdapter.submitList(precautionsList)
+        initClicks()
+        getGlobalData()
+    }
 
-        recyclerViewPrecautions.adapter = precautionsAdapter
-
+    private fun initClicks() = binding.run {
         txtViewSymptoms.setOnClickListener {
             goNextScreen(SymptomsActivity::class.java)
         }
@@ -107,11 +126,9 @@ class MainActivity : AppCompatActivity() {
         txtViewPrecautions.setOnClickListener {
             goNextScreen(PrecautionActivity::class.java)
         }
-
-        getGlobalData()
     }
 
-    private fun getGlobalData() {
+    private fun getGlobalData() = binding.run {
         val url: String = "https://corona.lmao.ninja/v2/all/"
 
         val stringRequest = StringRequest(
