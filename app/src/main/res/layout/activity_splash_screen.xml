@@ -10,36 +10,36 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:layout_above="@+id/contGetStarted"
+        android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_gravity="center"
-            android:src="@drawable/splash_screen"/>
+            android:src="@drawable/splash_screen" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="COVID-19"
-            android:textSize="30sp"
             android:layout_margin="5dp"
             android:fontFamily="@font/gilroy_bold"
+            android:text="COVID-19"
+            android:textAlignment="center"
             android:textColor="@color/colorWhite"
-            android:textAlignment="center"/>
+            android:textSize="30sp" />
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/about_covid"
-            android:textSize="15sp"
             android:layout_margin="5dp"
             android:fontFamily="@font/gilroy_light"
+            android:text="@string/about_covid"
+            android:textAlignment="center"
             android:textColor="@color/colorWhite"
-            android:textAlignment="center"/>
+            android:textSize="15sp" />
     </LinearLayout>
 
 

@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.activity_splash_screen.btnGo
 class SplashScreen : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.CovidApp)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
 

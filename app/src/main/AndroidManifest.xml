@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.CovidApp">
+        android:theme="@style/CovidApp">
 
         <activity android:name=".ui.activity.PrecautionActivity" />
         <activity android:name=".ui.activity.SymptomsActivity" />
@@ -20,13 +20,16 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity android:name=".ui.activity.SplashScreen">
+        <activity android:name=".ui.activity.SplashScreen"
+            android:exported="true"
+            android:theme="@style/splashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".ui.activity.MainActivity" />
     </application>
 
